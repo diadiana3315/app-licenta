@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1075353900248",
+    "project_id": "app-licenta-f1209",
+    "storage_bucket": "app-licenta-f1209.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1075353900248:android:e7b53adfd166e74ef733ad",
+        "android_client_info": {
+          "package_name": "com.example.app_licenta"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC-bkU6tgOVoLNwLEsUiR3krAOpQ67ZEAM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
