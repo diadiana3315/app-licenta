@@ -80,22 +80,40 @@ class _SignupScreenState extends State<SignupScreen> {
     );
   }
 
-  goToLogin(BuildContext context) => Navigator.push(
-    context,
-    MaterialPageRoute(builder: (context) => const LoginScreen()),
-  );
+  goToLogin(BuildContext context) =>
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const LoginScreen()),
+      );
 
-  goToHome(BuildContext context) => Navigator.push(
-    context,
-    MaterialPageRoute(builder: (context) => const HomeScreen()),
-  );
+  goToHome(BuildContext context) =>
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const HomeScreen()),
+      );
 
   _signup() async {
-    final user =
-    await _auth.createUserWithEmailAndPassword(_email.text, _password.text);
-    if (user != null) {
-      log("User Created Succesfully");
-      goToHome(context);
+    if (_email.text.isEmpty || _password.text.isEmpty || _name.text.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Please fill in all fields.")),
+      );
+      return;
+    }
+
+    try {
+      final user = await _auth.createUserWithEmailAndPassword(
+        _email.text,
+        _password.text,
+      );
+
+      if (user != null) {
+        log("User Created Successfully");
+        goToHome(context);
+      }
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(e.toString())),
+      );
     }
   }
 }

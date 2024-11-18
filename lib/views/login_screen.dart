@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 
 import '../home_screen.dart';
 import '../services/auth_service.dart';
+import '../widgets/bottom_nav_bar.dart';
 import '../widgets/button.dart';
 import '../widgets/textfield.dart';
 
@@ -48,6 +49,7 @@ class _LoginScreenState extends State<LoginScreen> {
             CustomTextField(
               hint: "Enter Password",
               label: "Password",
+              isPassword: true,
               controller: _password,
             ),
             const SizedBox(height: 30),
@@ -71,23 +73,40 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  goToSignup(BuildContext context) => Navigator.push(
-    context,
-    MaterialPageRoute(builder: (context) => const SignupScreen()),
-  );
+  goToSignup(BuildContext context) =>
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const SignupScreen()),
+      );
 
-  goToHome(BuildContext context) => Navigator.push(
-    context,
-    MaterialPageRoute(builder: (context) => const HomeScreen()),
-  );
+  goToHome(BuildContext context) =>
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const CustomBottomNavBar()),
+      );
 
   _login() async {
-    final user =
-    await _auth.loginUserWithEmailAndPassword(_email.text, _password.text);
+    if (_email.text.isEmpty || _password.text.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Please fill in all fields.")),
+      );
+      return;
+    }
 
-    if (user != null) {
-      log("User Logged In");
-      goToHome(context);
+    try {
+      final user = await _auth.loginUserWithEmailAndPassword(
+        _email.text,
+        _password.text,
+      );
+
+      if (user != null) {
+        log("User Logged In");
+        goToHome(context);
+      }
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(e.toString())),
+      );
     }
   }
 }
